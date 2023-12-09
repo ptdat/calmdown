@@ -23,6 +23,30 @@ public class CardGameManager : Singleton<CardGameManager>
     [SerializeField] private CardData _currentCard;
     void Start()
     {
+        
+    }
+
+    public void EasyMode()
+    {
+        _gridColumnSize = 3;
+        _gridRowSize = 2;
+        InitGame();
+    }
+    public void NormalMode()
+    {
+        _gridColumnSize = 4;
+        _gridRowSize = 3;
+        InitGame();
+    }
+    public void HardMode()
+    {
+        _gridColumnSize = 5;
+        _gridRowSize = 4;
+        _gridLayoutGroup.cellSize = new Vector2(133, 213);
+        InitGame();
+    }
+    private void InitGame()
+    {
         _countCards = new Dictionary<string, OddCardData>();
         _oddCards = new Dictionary<string, OddCardData>();
         _currentCard = new CardData();
@@ -30,7 +54,6 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridLayoutGroup.constraintCount = _gridColumnSize;
         GeneralMapSize(_gridColumnSize, _gridRowSize);
     }
-
     void GeneralMapSize(int col, int row)
     {
         for (int i = 0; i < col; i++)
@@ -153,6 +176,18 @@ public class CardGameManager : Singleton<CardGameManager>
         }
         return null;
     }
+
+    public void ClearAllCards()
+    {
+        foreach (var cardItem in _cardsInit)    
+        {
+            Destroy(cardItem.gameObject);
+        }
+
+        _cardsInit = null;
+    }
+
+   
     
 }
 
