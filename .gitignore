@@ -70,3 +70,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+CALM_DOWN/Library
+CALM_DOWN/Library
+CALM_DOWN/Temp
+
+CALM_DOWN/Logs
