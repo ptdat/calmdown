@@ -21,27 +21,36 @@ public class CardGameManager : Singleton<CardGameManager>
     
     [Header("Current Card")] 
     [SerializeField] private CardData _currentCard;
+
+    [SerializeField] private int _moveStep;
+    [SerializeField] private int _checkMoveStep;
     void Start()
     {
-        
+        _checkMoveStep = 0;
     }
 
     public void EasyMode()
     {
+        _gridLayoutGroup.enabled = true;
         _gridColumnSize = 3;
         _gridRowSize = 2;
+        _moveStep = 3;
         InitGame();
     }
     public void NormalMode()
     {
+        _gridLayoutGroup.enabled = true;
         _gridColumnSize = 4;
         _gridRowSize = 3;
+        _moveStep = 4;
         InitGame();
     }
     public void HardMode()
     {
+        _gridLayoutGroup.enabled = true;
         _gridColumnSize = 5;
         _gridRowSize = 4;
+        _moveStep = 5;
         _gridLayoutGroup.cellSize = new Vector2(133, 213);
         InitGame();
     }
@@ -159,7 +168,12 @@ public class CardGameManager : Singleton<CardGameManager>
                 _cardsInit[_currentCard.i,_currentCard.j].SetActiveButton();
                 _currentCard.SetData("",-1,-1);
             }
+
+            _checkMoveStep++;
         }
+
+        CheckWin();
+        CheckLose();
     }
     
     Button GetRandomCard()
@@ -187,8 +201,29 @@ public class CardGameManager : Singleton<CardGameManager>
         _cardsInit = null;
     }
 
-   
-    
+    private void CheckWin()
+    {
+        int cardCorrect = 0;
+        foreach (CardItem cardItem in _cardsInit)
+        {
+            if (!cardItem.gameObject.activeInHierarchy)
+                cardCorrect++;
+        }
+
+        if (cardCorrect == _cardsInit.Length && _checkMoveStep <= _moveStep)
+        {
+            Debug.LogError("WIN !!!!");
+            CardUIManager.Instance.ShowWin();
+        }
+    }
+
+    private void CheckLose()
+    {
+        if (_checkMoveStep > _moveStep)
+        {
+            CardUIManager.Instance.ShowLose();
+        }
+    }
 }
 
 public class OddCardData
