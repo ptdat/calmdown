@@ -137,6 +137,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardButton: {fileID: 1587168068997226386}
+  _data:
+    cardName: Cyan
+    i: 0
+    j: 0
 --- !u!1 &3499124239166510520
 GameObject:
   m_ObjectHideFlags: 0

@@ -484,16 +484,18 @@ MonoBehaviour:
   _gridColumnSize: 4
   _gridRowSize: 3
   _gridLayoutGroup: {fileID: 2055979959}
-  cardInitTransform: {fileID: 2055979958}
-  cardsPrefab:
+  _cardInitTransform: {fileID: 2055979958}
+  _cardsPrefab:
   - {fileID: 1843917189708644407, guid: ebfff669f210f4a44a1913bd3fe192d6, type: 3}
   - {fileID: 1587168068997226386, guid: 6c67084fb7efd40498aa9be8f0ad1c65, type: 3}
   - {fileID: 2184376792534142217, guid: 461818eb7e1f14bd3b26d21933351f96, type: 3}
   - {fileID: 8106244641594926682, guid: 94f3f9926347543e5b22e4f3c0f1602c, type: 3}
   - {fileID: 4674293813525750687, guid: 877a8e191e58541c7af6ad51d334ade0, type: 3}
   - {fileID: 3586563713243686583, guid: d62aa7d5d41c04c5c96c9c4362ab9732, type: 3}
-  cardsInit: []
-  currentCardName: 
+  _currentCard:
+    cardName: 
+    i: 0
+    j: 0
 --- !u!4 &880074002
 Transform:
   m_ObjectHideFlags: 0

@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
 public class CardItem : MonoBehaviour
 {
     [SerializeField] Button cardButton;
@@ -12,21 +14,26 @@ public class CardItem : MonoBehaviour
         
     }
 
-    public void SetDataAndOnClickAction(string cardNam, int i, int j)
+    public void SetActiveButton()
+    {
+        cardButton.interactable = true;
+    }
+    public void SetDataAndOnClickAction(CardData cardDat)
     {
         _data = new CardData();
-        _data.SetData(cardNam, i, j);
+        _data.SetData(cardDat);
         cardButton.onClick.RemoveAllListeners();
         cardButton.onClick.AddListener(OnCardClick);
     }
     void OnCardClick()
     {
-        Debug.Log($"On Click item name: {gameObject.name}");
+        Debug.Log($"On Click item name: {gameObject.name + _data.i + _data.j}");
+        cardButton.interactable = false;
         CardGameManager.Instance.OnCardClick(_data);
     }
     
 }
-
+[Serializable]
 public class CardData
 {
     public string cardName;
@@ -38,6 +45,12 @@ public class CardData
         cardName = nam;
         i = iInput;
         j = jInput;
+    }
+    public void SetData(CardData a)
+    {
+        cardName = a.cardName;
+        i = a.i;
+        j = a.j;
 
     }
 }
