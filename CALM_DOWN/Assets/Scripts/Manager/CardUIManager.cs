@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardUIManager : MonoBehaviour
+public class CardUIManager : Singleton<CardUIManager>
 {
-    [SerializeField] private BaseView _gameView;
-    [SerializeField] private BaseView _homeView;
-    [SerializeField] private BaseView _scoreView;
+    [SerializeField] private GameView _gameView;
+    [SerializeField] private HomeView _homeView;
+    [SerializeField] private ScoreView _scoreView;
 
     void Start()
     {
@@ -26,16 +26,31 @@ public class CardUIManager : MonoBehaviour
         _scoreView.HideView();
         _homeView.HideView();
     }
+
     public void ShowScoreView()
     {
         _gameView.HideView();
         _scoreView.ShowView();
         _homeView.HideView();
     }
+
     public void ShowHomeView()
     {
         _gameView.HideView();
         _scoreView.HideView();
         _homeView.ShowView();
     }
+
+    public void ShowWin()
+    {
+        _gameView.ShowView();
+        _gameView.ShowWin();
+    }
+
+    public void ShowLose()
+    {
+        _gameView.ShowView();
+        _gameView.ShowLose();
+    }
+
 }
