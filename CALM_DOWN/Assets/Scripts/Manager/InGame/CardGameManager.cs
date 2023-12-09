@@ -23,6 +23,11 @@ public class CardGameManager : Singleton<CardGameManager>
     [SerializeField] private CardData _currentCard;
     void Start()
     {
+        
+    }
+
+    public void InitGame()
+    {
         _countCards = new Dictionary<string, OddCardData>();
         _oddCards = new Dictionary<string, OddCardData>();
         _currentCard = new CardData();
@@ -30,7 +35,6 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridLayoutGroup.constraintCount = _gridColumnSize;
         GeneralMapSize(_gridColumnSize, _gridRowSize);
     }
-
     void GeneralMapSize(int col, int row)
     {
         for (int i = 0; i < col; i++)
