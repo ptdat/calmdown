@@ -19,4 +19,23 @@ public class CardUIManager : MonoBehaviour
         _scoreView.HideView();
         _homeView.ShowView();
     }
+
+    public void ShowGameModeView()
+    {
+        _gameView.ShowView();
+        _scoreView.HideView();
+        _homeView.HideView();
+    }
+    public void ShowScoreView()
+    {
+        _gameView.HideView();
+        _scoreView.ShowView();
+        _homeView.HideView();
+    }
+    public void ShowHomeView()
+    {
+        _gameView.HideView();
+        _scoreView.HideView();
+        _homeView.ShowView();
+    }
 }

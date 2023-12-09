@@ -26,7 +26,26 @@ public class CardGameManager : Singleton<CardGameManager>
         
     }
 
-    public void InitGame()
+    public void EasyMode()
+    {
+        _gridColumnSize = 3;
+        _gridRowSize = 2;
+        InitGame();
+    }
+    public void NormalMode()
+    {
+        _gridColumnSize = 4;
+        _gridRowSize = 3;
+        InitGame();
+    }
+    public void HardMode()
+    {
+        _gridColumnSize = 5;
+        _gridRowSize = 4;
+        _gridLayoutGroup.cellSize = new Vector2(133, 213);
+        InitGame();
+    }
+    private void InitGame()
     {
         _countCards = new Dictionary<string, OddCardData>();
         _oddCards = new Dictionary<string, OddCardData>();
@@ -157,6 +176,18 @@ public class CardGameManager : Singleton<CardGameManager>
         }
         return null;
     }
+
+    public void ClearAllCards()
+    {
+        foreach (var cardItem in _cardsInit)    
+        {
+            Destroy(cardItem.gameObject);
+        }
+
+        _cardsInit = null;
+    }
+
+   
     
 }
 
