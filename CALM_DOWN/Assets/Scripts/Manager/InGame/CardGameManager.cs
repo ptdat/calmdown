@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CardGameManager : Singleton<CardGameManager>
 {
@@ -24,6 +27,9 @@ public class CardGameManager : Singleton<CardGameManager>
 
     [SerializeField] private int _moveStep;
     [SerializeField] private int _checkMoveStep;
+
+    public Action OnCardCorrect;
+    public Action OnCardNotCorrect;
     void Start()
     {
         _checkMoveStep = 0;
@@ -162,14 +168,16 @@ public class CardGameManager : Singleton<CardGameManager>
                 _cardsInit[_currentCard.i,_currentCard.j].gameObject.SetActive(false);
                 _currentCard.SetData("",-1,-1);
                 CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.Correct);
+                OnCardCorrect?.Invoke();
             }
             else
             {
                 Debug.Log($"Not Correct item: {cardData.cardName + cardData.i + cardData.j}");
-                _cardsInit[cardData.i,cardData.j].SetActiveButton();
-                _cardsInit[_currentCard.i,_currentCard.j].SetActiveButton();
+                //_cardsInit[cardData.i,cardData.j].SetActiveButton();
+                //_cardsInit[_currentCard.i,_currentCard.j].SetActiveButton();
                 _currentCard.SetData("",-1,-1);
                 CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.NotCorrect);
+                OnCardNotCorrect?.Invoke();
             }
 
             _checkMoveStep++;

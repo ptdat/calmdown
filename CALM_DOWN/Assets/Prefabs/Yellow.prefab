@@ -262,6 +262,9 @@ MonoBehaviour:
     cardName: Yellow
     i: 0
     j: 0
+  _flipSpeed: 10
+  _isFlipped: 0
+  _isFlippedNotCorrect: 0
 --- !u!1 &3586563713561553150
 GameObject:
   m_ObjectHideFlags: 0

@@ -276,6 +276,9 @@ MonoBehaviour:
     cardName: Pink
     i: 0
     j: 0
+  _flipSpeed: 10
+  _isFlipped: 0
+  _isFlippedNotCorrect: 0
 --- !u!1 &9211031216747155843
 GameObject:
   m_ObjectHideFlags: 0
