@@ -10,6 +10,7 @@ public class CardDataScoreManager : Singleton<CardDataScoreManager>
     [SerializeField] private string path = "";
     [SerializeField] private ScoreData _scoreData;
     public bool isLoadData;
+    [SerializeField] private bool isTestData = true;
     void Start()
     {
         isLoadData = false;
@@ -17,11 +18,15 @@ public class CardDataScoreManager : Singleton<CardDataScoreManager>
         _scoreData = new ScoreData();
         _scoreData.highScore = -1;
         _scoreData.scores = new List<Score>();
-         // _scoreData.scores.Add(new Score(5, 2));
-         // _scoreData.scores.Add(new Score(2, 4));
-         // UpdateHighScore();
-         // SaveFile();
         
+        if (isTestData)
+        {
+            _scoreData.scores.Add(new Score(5, 2));
+            _scoreData.scores.Add(new Score(2, 4));
+            UpdateHighScore();
+            SaveFile();
+        }
+
         if (File.Exists(path))
         {
             OpenFile();
