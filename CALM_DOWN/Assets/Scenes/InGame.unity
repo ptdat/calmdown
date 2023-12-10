@@ -2847,7 +2847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 1427378502}
   highsScoreText: {fileID: 2338097681168930754}
-  content: {fileID: 1041174626}
+  scoreContent: {fileID: 1041174626}
   scorePrefab: {fileID: 68911593661400355, guid: 0a8594ac7e7189045ba90ed7a304fe3d, type: 3}
   scoreItems: []
 --- !u!1 &1024308672

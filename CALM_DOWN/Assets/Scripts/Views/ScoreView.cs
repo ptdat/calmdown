@@ -7,7 +7,7 @@ using UnityEngine;
 public class ScoreView : BaseView
 {
     [SerializeField] private TMP_Text highsScoreText;
-    [SerializeField] private RectTransform content;
+    [SerializeField] private Transform scoreContent;
     [SerializeField] private TMP_Text scorePrefab;
     [SerializeField] private List<TMP_Text> scoreItems;
     private ScoreData _scoreDataa;
@@ -32,7 +32,7 @@ public class ScoreView : BaseView
         ClearScoreItem();
         foreach (Score dataScore in _scoreDataa.scores)
         {
-            TMP_Text score = Instantiate(scorePrefab, content);
+            TMP_Text score = Instantiate(scorePrefab, scoreContent);
             score.text = $"Score: {dataScore.score} - Time: {dataScore.time}";
             scoreItems.Add(score);
         }
