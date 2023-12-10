@@ -83,29 +83,10 @@ public class CardGameManager : Singleton<CardGameManager>
                 CreateCard(temp, i, j);
             }
         }
-        // StartCoroutine(DoJob());
         GetOddCards();
         OddCardsCheck();
-        // while (IsOddCards())
-        // {
-        //     OddCardsCheck();
-        //     GetOddCards();
-        // }
     }
 
-    // IEnumerator DoJob()
-    // {
-    //     GetOddCards();
-    //     while (IsOddCards())
-    //     {
-    //         yield return new WaitForSeconds(.5f);
-    //         _gridLayoutGroup.enabled = false;
-    //         OddCardsCheck();
-    //         yield return new WaitForSeconds(.5f);
-    //         _gridLayoutGroup.enabled = true;
-    //         GetOddCards();
-    //     }
-    // }
     void CountCards(CardData data)
     {
         if (!_countCards.ContainsKey(data.cardName))
@@ -128,7 +109,7 @@ public class CardGameManager : Singleton<CardGameManager>
     void DecreaseCountCards(CardData data)
     {
         OddCardData countOddCard = _countCards[data.cardName];
-        if (countOddCard.cardsData.Count > 2)
+        if (countOddCard.cardsData.Count > 1)
         {
             countOddCard.cardsData.Remove(data);
             countOddCard.cardCount--;
