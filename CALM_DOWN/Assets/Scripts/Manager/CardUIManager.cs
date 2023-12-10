@@ -30,8 +30,9 @@ public class CardUIManager : Singleton<CardUIManager>
     public void ShowScoreView()
     {
         _gameView.HideView();
-        _scoreView.ShowView();
         _homeView.HideView();
+        _scoreView.ShowView();
+        _scoreView.ShowHighScore();
     }
 
     public void ShowHomeView()

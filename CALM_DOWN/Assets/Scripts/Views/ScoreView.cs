@@ -1,18 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ScoreView : BaseView
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private TMP_Text highsScoreText;
+    [SerializeField] private Transform content;
+    [SerializeField] private TMP_Text scorePrefab;
+    [SerializeField] private List<TMP_Text> scoreItems;
+    private ScoreData _scoreDataa;
+
+    private void Start()
     {
-        
+        scoreItems = new List<TMP_Text>();
+        _scoreDataa = new ScoreData();
+        _scoreDataa.scores = new List<Score>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ShowHighScore()
     {
+        if (!CardDataScoreManager.Instance.isLoadData)
+        {
+            CardDataScoreManager.Instance.OpenFile();
+        }
         
+        _scoreDataa = CardDataScoreManager.Instance.GetScoreData();
+        highsScoreText.text = $"High score: {_scoreDataa.highScore.ToString()}";
+        
+        ClearScoreItem();
+        foreach (Score dataScore in _scoreDataa.scores)
+        {
+            TMP_Text score = Instantiate(scorePrefab, content);
+            score.text = $"Score: {dataScore.score} - Time: {dataScore.time}";
+            scoreItems.Add(score);
+        }
+    }
+
+    private void ClearScoreItem()
+    {
+        foreach (TMP_Text item in scoreItems)
+        {
+            Destroy(item.gameObject);
+        }
+        scoreItems.Clear();
     }
 }
