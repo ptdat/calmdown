@@ -151,6 +151,7 @@ public class CardGameManager : Singleton<CardGameManager>
         if (string.IsNullOrEmpty(_currentCard.cardName))
         {
             _currentCard.SetData(cardData);
+            CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.Click);
         }
         else
         {
@@ -160,6 +161,7 @@ public class CardGameManager : Singleton<CardGameManager>
                 _cardsInit[cardData.i,cardData.j].gameObject.SetActive(false);
                 _cardsInit[_currentCard.i,_currentCard.j].gameObject.SetActive(false);
                 _currentCard.SetData("",-1,-1);
+                CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.Correct);
             }
             else
             {
@@ -167,6 +169,7 @@ public class CardGameManager : Singleton<CardGameManager>
                 _cardsInit[cardData.i,cardData.j].SetActiveButton();
                 _cardsInit[_currentCard.i,_currentCard.j].SetActiveButton();
                 _currentCard.SetData("",-1,-1);
+                CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.NotCorrect);
             }
 
             _checkMoveStep++;
@@ -214,6 +217,7 @@ public class CardGameManager : Singleton<CardGameManager>
         {
             Debug.LogError("WIN !!!!");
             CardUIManager.Instance.ShowWin();
+            CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.Win);
         }
     }
 
@@ -222,6 +226,7 @@ public class CardGameManager : Singleton<CardGameManager>
         if (_checkMoveStep > _moveStep)
         {
             CardUIManager.Instance.ShowLose();
+            CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.Lose);
         }
     }
 }
