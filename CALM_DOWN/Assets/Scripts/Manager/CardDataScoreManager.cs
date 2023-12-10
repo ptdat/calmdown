@@ -4,38 +4,46 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class DataScoreManager : Singleton<DataScoreManager>
+public class CardDataScoreManager : Singleton<CardDataScoreManager>
 {
     [SerializeField] private string fileName = "scoreData.txt";
     [SerializeField] private string path = "";
     [SerializeField] private ScoreData _scoreData;
+    public bool isLoadData;
     void Start()
     {
+        isLoadData = false;
         path = string.Concat(Application.persistentDataPath + $"/{fileName}");
         _scoreData = new ScoreData();
-        _scoreData.highScore = -1;
-        _scoreData.scores = new List<Score>();
-       
-        if (File.Exists(this.path))
+        //_scoreData.highScore = -1;
+        //_scoreData.scores = new List<Score>();
+        // _scoreData.scores.Add(new Score(5, 2));
+        // _scoreData.scores.Add(new Score(2, 4));
+        // UpdateHighScore();
+        // SaveFile(path);
+        
+        if (File.Exists(path))
         {
-            OpenFile(path);
+            OpenFile();
+            UpdateHighScore();
         }
         else
         {
             // save for the first time run
-            SaveFile(path);
+            SaveFile();
         }
     }
 
-    private void OpenFile(string path)
+    public void OpenFile()
     {
-        Debug.Log($"Path: {path}");
+        //Debug.Log($"Path: {path}");
         if (File.Exists(this.path))
         {
             // open file
             string data = File.ReadAllText(this.path);
             _scoreData = JsonUtility.FromJson<ScoreData>(data);
-            Debug.LogError($"Read high score:{_scoreData.highScore}");
+            isLoadData = true;
+            //Debug.LogError($"Read high score:{_scoreData.highScore}");
         }
         else
         {
@@ -43,7 +51,17 @@ public class DataScoreManager : Singleton<DataScoreManager>
         }
     }
 
-    private void SaveFile(string path)
+    public void UpdateHighScore()
+    {
+        foreach (Score dataScore in _scoreData.scores)
+        {
+            if (_scoreData.highScore < dataScore.score)
+            {
+                _scoreData.highScore = dataScore.score;
+            }
+        }
+    }
+    public void SaveFile()
     {
         string data = JsonUtility.ToJson(_scoreData);
         Debug.Log($"Data to save: {data}");
