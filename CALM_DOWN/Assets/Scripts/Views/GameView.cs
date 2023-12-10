@@ -22,7 +22,10 @@ public class GameView : BaseView
         gameMode.SetActive(true);
         winLose.SetActive(false);
     }
-
+    public void HideWinLose()
+    {
+        winLose.SetActive(false);
+    }
     public void ShowWin()
     {
         HideGameMode();

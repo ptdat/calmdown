@@ -16,6 +16,7 @@ public class CardUIManager : Singleton<CardUIManager>
     void ResetUI()
     {
         _gameView.HideView();
+        _gameView.HideWinLose();
         _scoreView.HideView();
         _homeView.ShowView();
     }
@@ -23,6 +24,8 @@ public class CardUIManager : Singleton<CardUIManager>
     public void ShowGameModeView()
     {
         _gameView.ShowView();
+        _gameView.ShowGameMode();
+        _gameView.HideWinLose();
         _scoreView.HideView();
         _homeView.HideView();
     }
@@ -30,6 +33,7 @@ public class CardUIManager : Singleton<CardUIManager>
     public void ShowScoreView()
     {
         _gameView.HideView();
+        _gameView.HideWinLose();
         _homeView.HideView();
         _scoreView.ShowView();
         _scoreView.ShowHighScore();
@@ -38,6 +42,7 @@ public class CardUIManager : Singleton<CardUIManager>
     public void ShowHomeView()
     {
         _gameView.HideView();
+        _gameView.HideWinLose();
         _scoreView.HideView();
         _homeView.ShowView();
     }

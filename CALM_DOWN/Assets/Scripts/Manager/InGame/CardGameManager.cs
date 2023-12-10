@@ -109,7 +109,7 @@ public class CardGameManager : Singleton<CardGameManager>
     void DecreaseCountCards(CardData data)
     {
         OddCardData countOddCard = _countCards[data.cardName];
-        if (countOddCard.cardsData.Count > 2)
+        if (countOddCard.cardsData.Count > 1)
         {
             countOddCard.cardsData.Remove(data);
             countOddCard.cardCount--;
