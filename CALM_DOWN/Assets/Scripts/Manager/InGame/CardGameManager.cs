@@ -83,8 +83,9 @@ public class CardGameManager : Singleton<CardGameManager>
                 CreateCard(temp, i, j);
             }
         }
-        StartCoroutine(DoJob());
-        // GetOddCards();
+        // StartCoroutine(DoJob());
+        GetOddCards();
+        OddCardsCheck();
         // while (IsOddCards())
         // {
         //     OddCardsCheck();
@@ -92,19 +93,19 @@ public class CardGameManager : Singleton<CardGameManager>
         // }
     }
 
-    IEnumerator DoJob()
-    {
-        GetOddCards();
-        while (IsOddCards())
-        {
-            yield return new WaitForSeconds(.5f);
-            _gridLayoutGroup.enabled = false;
-            OddCardsCheck();
-            yield return new WaitForSeconds(.5f);
-            _gridLayoutGroup.enabled = true;
-            GetOddCards();
-        }
-    }
+    // IEnumerator DoJob()
+    // {
+    //     GetOddCards();
+    //     while (IsOddCards())
+    //     {
+    //         yield return new WaitForSeconds(.5f);
+    //         _gridLayoutGroup.enabled = false;
+    //         OddCardsCheck();
+    //         yield return new WaitForSeconds(.5f);
+    //         _gridLayoutGroup.enabled = true;
+    //         GetOddCards();
+    //     }
+    // }
     void CountCards(CardData data)
     {
         if (!_countCards.ContainsKey(data.cardName))
@@ -162,10 +163,10 @@ public class CardGameManager : Singleton<CardGameManager>
     {
         for (int i = 0; i < _oddCards.Count-1; i+=2)
         {
-            for (int j = 1; j < _oddCards.Count; j+=2)
+            //for (int j = 1; j < _oddCards.Count; j+=2)
             {
                 KeyValuePair<string, OddCardData> firstCards = _oddCards.ElementAt(i);
-                KeyValuePair<string, OddCardData> secondCards = _oddCards.ElementAt(j);
+                KeyValuePair<string, OddCardData> secondCards = _oddCards.ElementAt(i+1);
                 
                 // get random 1 card from list 1
                 int indexRandom = Random.Range(0, firstCards.Value.cardsData.Count);
@@ -177,13 +178,12 @@ public class CardGameManager : Singleton<CardGameManager>
                 Button temp = GetRandomCardByName(randomCard2.cardName);
                 if (temp != null)
                 {
-                    _cardsInit[randomCard.i, randomCard.j].gameObject.SetActive(false);
-                    //Destroy(_cardsInit[randomCard.i, randomCard.j].gameObject);
+                    //_cardsInit[randomCard.i, randomCard.j].gameObject.SetActive(false);
+                    Destroy(_cardsInit[randomCard.i, randomCard.j].gameObject);
+                    //Update count card from list 1
                     DecreaseCountCards(randomCard);
                     // create new card from list 2 to card from list 1
                     CreateCard(temp, randomCard.i, randomCard.j);
-                    //Update count card from list 1
-                    
                 }
             }
         }
