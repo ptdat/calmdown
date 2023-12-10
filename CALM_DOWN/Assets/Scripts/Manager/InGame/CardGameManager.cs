@@ -18,6 +18,7 @@ public class CardGameManager : Singleton<CardGameManager>
 
     [Header("Prefabs Init")] 
     [SerializeField] private List<Button> _cardsPrefab;
+
     [SerializeField] private CardItem[,] _cardsInit;
     private Dictionary<string, OddCardData> _countCards;
     private Dictionary<string, OddCardData> _oddCards;
@@ -25,6 +26,7 @@ public class CardGameManager : Singleton<CardGameManager>
     [Header("Current Card")] 
     [SerializeField] private CardData _currentCard;
 
+    
     [SerializeField] private int _moveStep;
     [SerializeField] private int _checkMoveStep;
 
@@ -41,6 +43,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridColumnSize = 3;
         _gridRowSize = 2;
         _moveStep = 3;
+        _gridLayoutGroup.cellSize = new Vector2(200, 320);
         InitGame();
     }
     public void NormalMode()
@@ -49,6 +52,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridColumnSize = 4;
         _gridRowSize = 3;
         _moveStep = 4;
+        _gridLayoutGroup.cellSize = new Vector2(200, 320);
         InitGame();
     }
     public void HardMode()
@@ -79,9 +83,29 @@ public class CardGameManager : Singleton<CardGameManager>
                 CreateCard(temp, i, j);
             }
         }
+        // StartCoroutine(DoJob());
+        GetOddCards();
         OddCardsCheck();
+        // while (IsOddCards())
+        // {
+        //     OddCardsCheck();
+        //     GetOddCards();
+        // }
     }
 
+    // IEnumerator DoJob()
+    // {
+    //     GetOddCards();
+    //     while (IsOddCards())
+    //     {
+    //         yield return new WaitForSeconds(.5f);
+    //         _gridLayoutGroup.enabled = false;
+    //         OddCardsCheck();
+    //         yield return new WaitForSeconds(.5f);
+    //         _gridLayoutGroup.enabled = true;
+    //         GetOddCards();
+    //     }
+    // }
     void CountCards(CardData data)
     {
         if (!_countCards.ContainsKey(data.cardName))
@@ -96,40 +120,71 @@ public class CardGameManager : Singleton<CardGameManager>
         else
         {
             OddCardData countOddCard = _countCards[data.cardName];
-            countOddCard.cardCount++;
             countOddCard.AddData(data,countOddCard.cardCount++);
             _countCards[data.cardName] = countOddCard;
         }
     }
 
-    void OddCardsCheck()
+    void DecreaseCountCards(CardData data)
+    {
+        OddCardData countOddCard = _countCards[data.cardName];
+        if (countOddCard.cardsData.Count > 2)
+        {
+            countOddCard.cardsData.Remove(data);
+            countOddCard.cardCount--;
+            _countCards[data.cardName] = countOddCard;
+        }
+    }
+
+    bool IsOddCards()
+    {
+        if (_oddCards.Count > 0)
+        {
+            Debug.LogError("IsOddCards : TRUE");
+            return true;
+        }
+
+        Debug.LogError("IsOddCards : FALSE");
+        return false;
+    }
+    void GetOddCards()
     {
         // Get Odd card
         foreach (KeyValuePair<string, OddCardData> keyValuePair in _countCards)
         {
             if (keyValuePair.Value.cardCount % 2 != 0)
             {
-                _oddCards.Add(keyValuePair.Key, keyValuePair.Value);
+                _oddCards.TryAdd(keyValuePair.Key, keyValuePair.Value);
+                Debug.LogError($"Get odd card:{keyValuePair.Value.cardsData[0].cardName} Count: {keyValuePair.Value.cardCount}");
             }
         }
-
+    }
+    void OddCardsCheck()
+    {
         for (int i = 0; i < _oddCards.Count-1; i+=2)
         {
-            for (int j = 1; j < _oddCards.Count; j+=2)
+            //for (int j = 1; j < _oddCards.Count; j+=2)
             {
                 KeyValuePair<string, OddCardData> firstCards = _oddCards.ElementAt(i);
-                KeyValuePair<string, OddCardData> secondCards = _oddCards.ElementAt(j);
+                KeyValuePair<string, OddCardData> secondCards = _oddCards.ElementAt(i+1);
                 
+                // get random 1 card from list 1
                 int indexRandom = Random.Range(0, firstCards.Value.cardsData.Count);
                 CardData randomCard = firstCards.Value.cardsData[indexRandom];
-                
+                // get random 1 card from list 2
                 int indexRandom2 = Random.Range(0, secondCards.Value.cardsData.Count);
                 CardData randomCard2 = secondCards.Value.cardsData[indexRandom2];
                 
                 Button temp = GetRandomCardByName(randomCard2.cardName);
-                Debug.Log($"Replace old card:{randomCard.cardName} Card: {randomCard.i}{randomCard.j} by Create new odd card name: {randomCard2.cardName}");
-                Destroy(_cardsInit[randomCard.i, randomCard.j].gameObject);
-                CreateCard(temp, randomCard.i, randomCard.j);
+                if (temp != null)
+                {
+                    //_cardsInit[randomCard.i, randomCard.j].gameObject.SetActive(false);
+                    Destroy(_cardsInit[randomCard.i, randomCard.j].gameObject);
+                    //Update count card from list 1
+                    DecreaseCountCards(randomCard);
+                    // create new card from list 2 to card from list 1
+                    CreateCard(temp, randomCard.i, randomCard.j);
+                }
             }
         }
     }
@@ -196,7 +251,7 @@ public class CardGameManager : Singleton<CardGameManager>
     {
         foreach (Button card in _cardsPrefab)
         {
-            if (card.name.Equals(cardName))
+            if (card.name.ToLower().Contains(cardName.ToLower()))
                 return card;
         }
         return null;
@@ -204,12 +259,19 @@ public class CardGameManager : Singleton<CardGameManager>
 
     public void ClearAllCards()
     {
-        foreach (var cardItem in _cardsInit)    
-        {
-            Destroy(cardItem.gameObject);
-        }
-
+        // if (_cardsInit == null) return;
+        // foreach (var cardItem in _cardsInit)
+        // {
+            // if (cardItem != null && cardItem.gameObject != null)
+            // {
+                // Destroy(cardItem.gameObject);
+            // }
+        // }
         _cardsInit = null;
+        foreach (Transform card in _cardInitTransform)
+        {
+            Destroy(card.gameObject);
+        }
     }
 
     private void CheckWin()
