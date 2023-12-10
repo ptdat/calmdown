@@ -2770,6 +2770,10 @@ MonoBehaviour:
   - {fileID: 8106244641594926682, guid: 94f3f9926347543e5b22e4f3c0f1602c, type: 3}
   - {fileID: 4674293813525750687, guid: 877a8e191e58541c7af6ad51d334ade0, type: 3}
   - {fileID: 3586563713243686583, guid: d62aa7d5d41c04c5c96c9c4362ab9732, type: 3}
+  - {fileID: 3586563713243686583, guid: c218b9a7029273441b085eb313668d2a, type: 3}
+  - {fileID: 3586563713243686583, guid: d6df3d9666b84e84b92aa50df6cb9b80, type: 3}
+  - {fileID: 3586563713243686583, guid: 28c54d0a87e43104789b21fb1bfbc055, type: 3}
+  - {fileID: 3586563713243686583, guid: aec41830aeee81340b58e124f652b903, type: 3}
   _currentCard:
     cardName: 
     i: 0
@@ -2843,7 +2847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 1427378502}
   highsScoreText: {fileID: 2338097681168930754}
-  content: {fileID: 1427378502}
+  content: {fileID: 1041174626}
   scorePrefab: {fileID: 68911593661400355, guid: 0a8594ac7e7189045ba90ed7a304fe3d, type: 3}
   scoreItems: []
 --- !u!1 &1024308672
@@ -2905,7 +2909,7 @@ GameObject:
   - component: {fileID: 1041174628}
   - component: {fileID: 1041174627}
   m_Layer: 5
-  m_Name: Content
+  m_Name: ContentScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

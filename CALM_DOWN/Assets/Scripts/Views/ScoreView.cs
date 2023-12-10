@@ -7,7 +7,7 @@ using UnityEngine;
 public class ScoreView : BaseView
 {
     [SerializeField] private TMP_Text highsScoreText;
-    [SerializeField] private Transform content;
+    [SerializeField] private RectTransform content;
     [SerializeField] private TMP_Text scorePrefab;
     [SerializeField] private List<TMP_Text> scoreItems;
     private ScoreData _scoreDataa;
@@ -15,8 +15,8 @@ public class ScoreView : BaseView
     private void Start()
     {
         scoreItems = new List<TMP_Text>();
-        _scoreDataa = new ScoreData();
-        _scoreDataa.scores = new List<Score>();
+        // _scoreDataa = new ScoreData();
+        // _scoreDataa.scores = new List<Score>();
     }
 
     public void ShowHighScore()

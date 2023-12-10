@@ -15,12 +15,12 @@ public class CardDataScoreManager : Singleton<CardDataScoreManager>
         isLoadData = false;
         path = string.Concat(Application.persistentDataPath + $"/{fileName}");
         _scoreData = new ScoreData();
-        //_scoreData.highScore = -1;
-        //_scoreData.scores = new List<Score>();
-        // _scoreData.scores.Add(new Score(5, 2));
-        // _scoreData.scores.Add(new Score(2, 4));
-        // UpdateHighScore();
-        // SaveFile(path);
+        _scoreData.highScore = -1;
+        _scoreData.scores = new List<Score>();
+         // _scoreData.scores.Add(new Score(5, 2));
+         // _scoreData.scores.Add(new Score(2, 4));
+         // UpdateHighScore();
+         // SaveFile();
         
         if (File.Exists(path))
         {
