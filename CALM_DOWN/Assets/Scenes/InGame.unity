@@ -1256,7 +1256,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1381239569}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2161,7 +2161,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2170,8 +2170,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2843,7 +2843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 1427378502}
   highsScoreText: {fileID: 2338097681168930754}
-  content: {fileID: 1041174626}
+  content: {fileID: 1427378502}
   scorePrefab: {fileID: 68911593661400355, guid: 0a8594ac7e7189045ba90ed7a304fe3d, type: 3}
   scoreItems: []
 --- !u!1 &1024308672

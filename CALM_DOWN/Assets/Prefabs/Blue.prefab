@@ -141,6 +141,9 @@ MonoBehaviour:
     cardName: Blue
     i: 0
     j: 0
+  _flipSpeed: 10
+  _isFlipped: 0
+  _isFlippedNotCorrect: 0
 --- !u!1 &1843917189740683029
 GameObject:
   m_ObjectHideFlags: 0
