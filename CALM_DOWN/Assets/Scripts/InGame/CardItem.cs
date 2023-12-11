@@ -8,13 +8,14 @@ using UnityEngine.UI;
 public class CardItem : MonoBehaviour
 {
     [SerializeField] Button cardButton;
+    [SerializeField] GameObject img;
     [SerializeField] private CardData _data;
     [SerializeField] private float _flipSpeed = 10f; 
     [SerializeField] private bool _isFlipped = false;
     [SerializeField] private bool _isFlippedNotCorrect = false;
     void Start()
     {
-        
+        img.SetActive(false);
     }
     private void OnDestroy()
     {
@@ -27,6 +28,7 @@ public class CardItem : MonoBehaviour
         {
             StartCoroutine(FlipCard(() =>
             {
+                img.SetActive(true);
                 CardGameManager.Instance.OnCardClick(_data);
             }));
             _isFlipped = false;
@@ -36,6 +38,7 @@ public class CardItem : MonoBehaviour
         {
             StartCoroutine(FlipCard(() =>
             {
+                img.SetActive(false);
                 cardButton.interactable = true;
             }));
             _isFlippedNotCorrect = false;

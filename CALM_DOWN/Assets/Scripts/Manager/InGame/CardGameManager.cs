@@ -54,7 +54,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridRowSize = 2;
         _moveStep = 6;
         _prefabs = _cardsPrefab.Take(3).ToList();
-        _gridLayoutGroup.cellSize = new Vector2(200, 320);
+        _gridLayoutGroup.cellSize = new Vector2(280, 320);
         InitGame();
     }
     public void NormalMode()
@@ -64,7 +64,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridRowSize = 3;
         _moveStep = 12;
         _prefabs = _cardsPrefab.Take(6).ToList();
-        _gridLayoutGroup.cellSize = new Vector2(200, 320);
+        _gridLayoutGroup.cellSize = new Vector2(280, 320);
         InitGame();
     }
     public void HardMode()
@@ -74,7 +74,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridRowSize = 4;
         _moveStep = 20;
         _prefabs = _cardsPrefab.Take(10).ToList();
-        _gridLayoutGroup.cellSize = new Vector2(133, 213);
+        _gridLayoutGroup.cellSize = new Vector2(200, 213);
         InitGame();
     }
     private void InitGame()
