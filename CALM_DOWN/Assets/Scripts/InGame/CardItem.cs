@@ -59,10 +59,8 @@ public class CardItem : MonoBehaviour
     }
     void OnCardClick()
     {
-        //Debug.Log($"On Click item name: {gameObject.name + _data.i + _data.j}");
         cardButton.interactable = false;
         _isFlipped = true;
-        //CardGameManager.Instance.OnCardClick(_data);
     }
     private void OnCardCorrect()
     {
@@ -89,20 +87,12 @@ public class CardItem : MonoBehaviour
 public class CardData
 {
     public string cardName;
-    public int i;
-    public int j;
-
-    public void SetData(string nam, int iInput, int jInput)
+    public void SetData(string name)
     {
-        cardName = nam;
-        i = iInput;
-        j = jInput;
+        cardName = name;
     }
     public void SetData(CardData a)
     {
         cardName = a.cardName;
-        i = a.i;
-        j = a.j;
-
     }
 }
