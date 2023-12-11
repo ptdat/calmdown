@@ -24,16 +24,24 @@ public class ScoreView : BaseView
         if (!CardDataScoreManager.Instance.isLoadData)
         {
             CardDataScoreManager.Instance.OpenFile();
+            CardDataScoreManager.Instance.UpdateShortestTime();
         }
         
         _scoreDataa = CardDataScoreManager.Instance.GetScoreData();
-        highsScoreText.text = $"High score: {_scoreDataa.highScore.ToString()}";
+        if (!_scoreDataa.shortestTime.ToString().Equals("-1"))
+        {
+            highsScoreText.text = $"Shortest time: {_scoreDataa.shortestTime.ToString()}";
+        }
+        else
+        {
+            highsScoreText.text ="";
+        }
         
         ClearScoreItem();
         foreach (Score dataScore in _scoreDataa.scores)
         {
             TMP_Text score = Instantiate(scorePrefab, scoreContent);
-            score.text = $"Score: {dataScore.score} - Time: {dataScore.time}";
+            score.text = $"Time: {dataScore.time}";
             scoreItems.Add(score);
         }
     }
