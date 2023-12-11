@@ -13,6 +13,7 @@ public class CardItem : MonoBehaviour
     [SerializeField] private float _flipSpeed = 10f; 
     [SerializeField] private bool _isFlipped = false;
     [SerializeField] private bool _isFlippedNotCorrect = false;
+    private float time;
     void Start()
     {
         img.SetActive(false);
@@ -26,19 +27,32 @@ public class CardItem : MonoBehaviour
     {
         if (_isFlipped)
         {
-            StartCoroutine(FlipCard(() =>
+            Vector3 targetScale = _isFlipped ? new Vector3(-1f, 1f, 1f) : new Vector3(1f, 1f, 1f);
+            transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * _flipSpeed);
+            time += Time.deltaTime;
+            if (time >= .75)
             {
                 img.SetActive(true);
-                CardGameManager.Instance.OnCardClick(_data);
-            }));
-            _isFlipped = false;
+                if (time >= 2f)
+                {
+                    time = 0;
+                    _isFlipped = false;
+                    CardGameManager.Instance.OnCardClick(_data);
+                }
+            }
+
+            //  StartCoroutine(FlipCard(() =>
+            //  {
+            //      CardGameManager.Instance.OnCardClick(_data);
+            //  }));
+            // _isFlipped = false;
         }
 
         if (_isFlippedNotCorrect)
         {
+            img.SetActive(false);
             StartCoroutine(FlipCard(() =>
             {
-                img.SetActive(false);
                 cardButton.interactable = true;
             }));
             _isFlippedNotCorrect = false;
