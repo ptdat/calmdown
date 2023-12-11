@@ -27,7 +27,6 @@ public class CardItem : MonoBehaviour
         {
             StartCoroutine(FlipCard(() =>
             {
-                //Debug.Log("Flip animation complete!");
                 CardGameManager.Instance.OnCardClick(_data);
             }));
             _isFlipped = false;
@@ -37,7 +36,6 @@ public class CardItem : MonoBehaviour
         {
             StartCoroutine(FlipCard(() =>
             {
-                //Debug.Log("Card Not Correct - Flip animation complete!");
                 cardButton.interactable = true;
             }));
             _isFlippedNotCorrect = false;

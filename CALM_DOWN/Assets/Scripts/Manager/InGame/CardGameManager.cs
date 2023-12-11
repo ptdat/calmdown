@@ -79,6 +79,8 @@ public class CardGameManager : Singleton<CardGameManager>
     }
     private void InitGame()
     {
+        _playTime = 0;
+        _checkMoveStep = 0;
         _isPlayGame = true;
         _currentCard = new CardData();
         ClearAllCards();
