@@ -16,21 +16,21 @@ public class CardDataScoreManager : Singleton<CardDataScoreManager>
         isLoadData = false;
         path = string.Concat(Application.persistentDataPath + $"/{fileName}");
         _scoreData = new ScoreData();
-        _scoreData.highScore = -1;
+        _scoreData.shortestTime = -1;
         _scoreData.scores = new List<Score>();
         
         if (isTestData)
         {
-            _scoreData.scores.Add(new Score(5, 2));
-            _scoreData.scores.Add(new Score(2, 4));
-            UpdateHighScore();
+            _scoreData.scores.Add(new Score(25.2f));
+            _scoreData.scores.Add(new Score(14f));
+            UpdateShortestTime();
             SaveFile();
         }
 
         if (File.Exists(path))
         {
             OpenFile();
-            UpdateHighScore();
+            UpdateShortestTime();
         }
         else
         {
@@ -39,6 +39,11 @@ public class CardDataScoreManager : Singleton<CardDataScoreManager>
         }
     }
 
+    public void AddNewTime(float playTime)
+    {
+        _scoreData.scores.Add(new Score(playTime));
+        UpdateShortestTime();
+    }
     public void OpenFile()
     {
         //Debug.Log($"Path: {path}");
@@ -48,7 +53,6 @@ public class CardDataScoreManager : Singleton<CardDataScoreManager>
             string data = File.ReadAllText(this.path);
             _scoreData = JsonUtility.FromJson<ScoreData>(data);
             isLoadData = true;
-            //Debug.LogError($"Read high score:{_scoreData.highScore}");
         }
         else
         {
@@ -56,13 +60,15 @@ public class CardDataScoreManager : Singleton<CardDataScoreManager>
         }
     }
 
-    public void UpdateHighScore()
+    public void UpdateShortestTime()
     {
+        if (_scoreData.shortestTime < 0 && _scoreData.scores.Count > 0)
+            _scoreData.shortestTime = _scoreData.scores[0].time;
         foreach (Score dataScore in _scoreData.scores)
         {
-            if (_scoreData.highScore < dataScore.score)
+            if (dataScore.time < _scoreData.shortestTime)
             {
-                _scoreData.highScore = dataScore.score;
+                _scoreData.shortestTime = dataScore.time;
             }
         }
     }
@@ -83,7 +89,7 @@ public class CardDataScoreManager : Singleton<CardDataScoreManager>
 [Serializable]
 public class ScoreData
 {
-    public int highScore;
+    public float shortestTime;
     public List<Score> scores;
 }
 
@@ -91,15 +97,12 @@ public class ScoreData
 public class Score
 {
     public float time;
-    public int score;
-
     public Score()
     {
         
     }
-    public Score(float t, int s)
+    public Score(float t)
     {
         time = t;
-        score = s;
     }
 }

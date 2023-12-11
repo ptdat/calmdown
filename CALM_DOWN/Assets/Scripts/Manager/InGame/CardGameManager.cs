@@ -24,15 +24,27 @@ public class CardGameManager : Singleton<CardGameManager>
     
     [SerializeField] private int _moveStep;
     [SerializeField] private int _checkMoveStep;
-    [SerializeField] private List<Button> prefabs;
+    [SerializeField] private List<Button> _prefabs;
     [SerializeField] private List<GameObject> _cardsInit;
     
     public Action OnCardCorrect;
     public Action OnCardNotCorrect;
+
+    [SerializeField] private bool _isPlayGame;
+    [SerializeField] private float _playTime;
     void Start()
     {
+        _isPlayGame = false;
         _checkMoveStep = 0;
         _cardsInit = new List<GameObject>();
+    }
+
+    private void Update()
+    {
+        if (_isPlayGame)
+        {
+            _playTime += Time.deltaTime;
+        }
     }
 
     public void EasyMode()
@@ -41,7 +53,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridColumnSize = 3;
         _gridRowSize = 2;
         _moveStep = 6;
-        prefabs = _cardsPrefab.Take(3).ToList();
+        _prefabs = _cardsPrefab.Take(3).ToList();
         _gridLayoutGroup.cellSize = new Vector2(200, 320);
         InitGame();
     }
@@ -51,7 +63,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridColumnSize = 4;
         _gridRowSize = 3;
         _moveStep = 12;
-        prefabs = _cardsPrefab.Take(6).ToList();
+        _prefabs = _cardsPrefab.Take(6).ToList();
         _gridLayoutGroup.cellSize = new Vector2(200, 320);
         InitGame();
     }
@@ -61,12 +73,13 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridColumnSize = 5;
         _gridRowSize = 4;
         _moveStep = 20;
-        prefabs = _cardsPrefab.Take(10).ToList();
+        _prefabs = _cardsPrefab.Take(10).ToList();
         _gridLayoutGroup.cellSize = new Vector2(133, 213);
         InitGame();
     }
     private void InitGame()
     {
+        _isPlayGame = true;
         _currentCard = new CardData();
         ClearAllCards();
         _gridLayoutGroup.constraintCount = _gridColumnSize;
@@ -77,9 +90,9 @@ public class CardGameManager : Singleton<CardGameManager>
     {
         for (int i = 0; i < (col*row)/2; i++)
         {
-            Button temp = prefabs[i];
+            Button temp = _prefabs[i];
             CreateNewCard(temp);
-            Button temp2 = prefabs[i];
+            Button temp2 = _prefabs[i];
             CreateNewCard(temp2);
         }
         ShuffleGridItems();
@@ -178,8 +191,11 @@ public class CardGameManager : Singleton<CardGameManager>
         if (cardCorrect == _cardsInit.Count())// && _checkMoveStep <= _moveStep)
         {
             //Debug.LogError("WIN !!!!");
+            _isPlayGame = false;
             CardUIManager.Instance.ShowWin();
             CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.Win);
+            CardDataScoreManager.Instance.AddNewTime(_playTime);
+            CardDataScoreManager.Instance.SaveFile();
         }
     }
 
@@ -187,8 +203,11 @@ public class CardGameManager : Singleton<CardGameManager>
     {
         if (_checkMoveStep > _moveStep)
         {
+            _isPlayGame = false;
             CardUIManager.Instance.ShowLose();
             CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.Lose);
+            CardDataScoreManager.Instance.AddNewTime(_playTime);
+            CardDataScoreManager.Instance.SaveFile();
         }
     }
 }
