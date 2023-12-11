@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,38 +26,38 @@ public class CardItem : MonoBehaviour
     }
     private void Update()
     {
-        if (_isFlipped)
-        {
-            Vector3 targetScale = _isFlipped ? new Vector3(-1f, 1f, 1f) : new Vector3(1f, 1f, 1f);
-            transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * _flipSpeed);
-            time += Time.deltaTime;
-            if (time >= .75)
-            {
-                img.SetActive(true);
-                if (time >= 2f)
-                {
-                    time = 0;
-                    _isFlipped = false;
-                    CardGameManager.Instance.OnCardClick(_data);
-                }
-            }
-
-            //  StartCoroutine(FlipCard(() =>
-            //  {
-            //      CardGameManager.Instance.OnCardClick(_data);
-            //  }));
-            // _isFlipped = false;
-        }
-
-        if (_isFlippedNotCorrect)
-        {
-            img.SetActive(false);
-            StartCoroutine(FlipCard(() =>
-            {
-                cardButton.interactable = true;
-            }));
-            _isFlippedNotCorrect = false;
-        }
+        // if (_isFlipped)
+        // {
+        //     // Vector3 targetScale = _isFlipped ? new Vector3(-1f, 1f, 1f) : new Vector3(1f, 1f, 1f);
+        //     // transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * _flipSpeed);
+        //     // time += Time.deltaTime;
+        //     // if (time >= .75)
+        //     // {
+        //     //     img.SetActive(true);
+        //     //     if (time >= 2f)
+        //     //     {
+        //     //         time = 0;
+        //     //         _isFlipped = false;
+        //     //         CardGameManager.Instance.OnCardClick(_data);
+        //     //     }
+        //     // }
+        //
+        //     //  StartCoroutine(FlipCard(() =>
+        //     //  {
+        //     //      CardGameManager.Instance.OnCardClick(_data);
+        //     //  }));
+        //     // _isFlipped = false;
+        // }
+        //
+        // if (_isFlippedNotCorrect)
+        // {
+        //     img.SetActive(false);
+        //     StartCoroutine(FlipCard(() =>
+        //     {
+        //         cardButton.interactable = true;
+        //     }));
+        //     _isFlippedNotCorrect = false;
+        // }
     }
    
     public void SetActiveButton()
@@ -74,8 +75,17 @@ public class CardItem : MonoBehaviour
     }
     void OnCardClick()
     {
-        cardButton.interactable = false;
         _isFlipped = true;
+        cardButton.interactable = false;
+        transform.DOScale(new Vector3(-1f, 1f, 1f), .5f).OnComplete(() =>
+        {
+            img.SetActive(true);
+            _isFlipped = false;
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                CardGameManager.Instance.OnCardClick(_data);
+            });
+        });
     }
     private void OnCardCorrect()
     {
@@ -85,6 +95,11 @@ public class CardItem : MonoBehaviour
     {
         //Debug.Log("OnCardNotCorrect");
         _isFlippedNotCorrect = true;
+        img.SetActive(false);
+        transform.DOScale(new Vector3(1f, 1f, 1f), .5f).OnComplete(() =>
+        {
+            cardButton.interactable = true;
+        });
     }
     
     IEnumerator FlipCard(Action onComplete = null)
