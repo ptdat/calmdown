@@ -169,7 +169,7 @@ public class CardGameManager : Singleton<CardGameManager>
         }
 
         CheckWin();
-        CheckLose();
+        //CheckLose();
     }
     
     public void ClearAllCards()
