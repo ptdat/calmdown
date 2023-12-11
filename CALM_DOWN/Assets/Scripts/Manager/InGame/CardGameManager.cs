@@ -42,7 +42,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridLayoutGroup.enabled = true;
         _gridColumnSize = 3;
         _gridRowSize = 2;
-        _moveStep = 3;
+        _moveStep = 6;
         _gridLayoutGroup.cellSize = new Vector2(200, 320);
         InitGame();
     }
@@ -51,7 +51,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridLayoutGroup.enabled = true;
         _gridColumnSize = 4;
         _gridRowSize = 3;
-        _moveStep = 4;
+        _moveStep = 12;
         _gridLayoutGroup.cellSize = new Vector2(200, 320);
         InitGame();
     }
@@ -60,7 +60,7 @@ public class CardGameManager : Singleton<CardGameManager>
         _gridLayoutGroup.enabled = true;
         _gridColumnSize = 5;
         _gridRowSize = 4;
-        _moveStep = 5;
+        _moveStep = 20;
         _gridLayoutGroup.cellSize = new Vector2(133, 213);
         InitGame();
     }
@@ -121,11 +121,11 @@ public class CardGameManager : Singleton<CardGameManager>
     {
         if (_oddCards.Count > 0)
         {
-            Debug.LogError("IsOddCards : TRUE");
+            //Debug.LogError("IsOddCards : TRUE");
             return true;
         }
 
-        Debug.LogError("IsOddCards : FALSE");
+        //Debug.LogError("IsOddCards : FALSE");
         return false;
     }
     void GetOddCards()
@@ -136,7 +136,7 @@ public class CardGameManager : Singleton<CardGameManager>
             if (keyValuePair.Value.cardCount % 2 != 0)
             {
                 _oddCards.TryAdd(keyValuePair.Key, keyValuePair.Value);
-                Debug.LogError($"Get odd card:{keyValuePair.Value.cardsData[0].cardName} Count: {keyValuePair.Value.cardCount}");
+                //Debug.LogError($"Get odd card:{keyValuePair.Value.cardsData[0].cardName} Count: {keyValuePair.Value.cardCount}");
             }
         }
     }
@@ -189,7 +189,7 @@ public class CardGameManager : Singleton<CardGameManager>
     public void OnCardClick(CardData cardData)
     {
         _gridLayoutGroup.enabled = false;
-        Debug.Log($"On click card: {cardData.cardName + cardData.i + cardData.j}");
+        //Debug.Log($"On click card: {cardData.cardName + cardData.i + cardData.j}");
         if (string.IsNullOrEmpty(_currentCard.cardName))
         {
             _currentCard.SetData(cardData);
@@ -199,7 +199,7 @@ public class CardGameManager : Singleton<CardGameManager>
         {
             if (_currentCard.cardName.Equals(cardData.cardName))
             {
-                Debug.Log($"Correct item: {cardData.cardName + cardData.i + cardData.j}");
+                //Debug.Log($"Correct item: {cardData.cardName + cardData.i + cardData.j}");
                 _cardsInit[cardData.i,cardData.j].gameObject.SetActive(false);
                 _cardsInit[_currentCard.i,_currentCard.j].gameObject.SetActive(false);
                 _currentCard.SetData("",-1,-1);
@@ -208,7 +208,7 @@ public class CardGameManager : Singleton<CardGameManager>
             }
             else
             {
-                Debug.Log($"Not Correct item: {cardData.cardName + cardData.i + cardData.j}");
+                //Debug.Log($"Not Correct item: {cardData.cardName + cardData.i + cardData.j}");
                 //_cardsInit[cardData.i,cardData.j].SetActiveButton();
                 //_cardsInit[_currentCard.i,_currentCard.j].SetActiveButton();
                 _currentCard.SetData("",-1,-1);
@@ -266,7 +266,7 @@ public class CardGameManager : Singleton<CardGameManager>
 
         if (cardCorrect == _cardsInit.Length && _checkMoveStep <= _moveStep)
         {
-            Debug.LogError("WIN !!!!");
+            //Debug.LogError("WIN !!!!");
             CardUIManager.Instance.ShowWin();
             CardSoundManager.Instance.PlaySFX(CardSoundManager.CardSoundEffectEnum.Win);
         }

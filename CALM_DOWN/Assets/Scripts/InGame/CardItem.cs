@@ -27,7 +27,7 @@ public class CardItem : MonoBehaviour
         {
             StartCoroutine(FlipCard(() =>
             {
-                Debug.Log("Flip animation complete!");
+                //Debug.Log("Flip animation complete!");
                 CardGameManager.Instance.OnCardClick(_data);
             }));
             _isFlipped = false;
@@ -37,7 +37,7 @@ public class CardItem : MonoBehaviour
         {
             StartCoroutine(FlipCard(() =>
             {
-                Debug.Log("Card Not Correct - Flip animation complete!");
+                //Debug.Log("Card Not Correct - Flip animation complete!");
                 cardButton.interactable = true;
             }));
             _isFlippedNotCorrect = false;
@@ -59,18 +59,18 @@ public class CardItem : MonoBehaviour
     }
     void OnCardClick()
     {
-        Debug.Log($"On Click item name: {gameObject.name + _data.i + _data.j}");
+        //Debug.Log($"On Click item name: {gameObject.name + _data.i + _data.j}");
         cardButton.interactable = false;
         _isFlipped = true;
         //CardGameManager.Instance.OnCardClick(_data);
     }
     private void OnCardCorrect()
     {
-        Debug.Log("OnCardCorrect");
+        //Debug.Log("OnCardCorrect");
     }
     private void OnCardNotCorrect()
     {
-        Debug.Log("OnCardNotCorrect");
+        //Debug.Log("OnCardNotCorrect");
         _isFlippedNotCorrect = true;
     }
     
